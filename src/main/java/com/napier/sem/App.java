@@ -1,5 +1,5 @@
-/**
- * Adding MongoDb Content into code as per Lab 2 Instructions 13 Feb CT
+/*
+  Adding MongoDb Content into code as per Lab 2 Instructions 13 Feb CT
  */
 package com.napier.sem;
 
@@ -19,7 +19,7 @@ public class App
         // Get a collection from the database
         MongoCollection<Document> collection = database.getCollection("test");
         // Create a document to store
-        Document doc = new Document("name", "Kevin Sim")
+        Document doc = new Document("name", "Carolyne Thomson")
                 .append("class", "Software Engineering Methods")
                 .append("year", "2021")
                 .append("result", new Document("CW", 95).append("EX", 85));
