@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/thommo1874/GroupE.svg?branch=main)](https://travis-ci.com/thommo1874/GroupE)
-
 # Software Engineering Methods
 
 - Master Build Status [![Build Status](https://www.travis-ci.com/thommo1874/GroupE.svg?branch=master)](https://www.travis-ci.com/thommo1874/GroupE)

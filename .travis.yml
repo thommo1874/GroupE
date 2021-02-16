@@ -1,3 +1,5 @@
+/* Updating winth new container info 13 Feb CT
+
 sudo: required
 
 language: java
@@ -6,8 +8,8 @@ services:
   - docker
 
 after_success:
-  - docker network create --driver bridge GroupE
+  - docker network create --driver bridge se-methods
   - docker pull mongo
-  - docker run -d --name mongo-dbserver --network GroupE mongo
-  - docker build -t GroupE .
-  - docker run --network se-methods GroupE
+  - docker run -d --name mongo-dbserver --network se-methods mongo
+  - docker build -t se_methods .
+  - docker run --network se-methods se_methods
