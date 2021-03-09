@@ -1,9 +1,7 @@
-/*
-  Adding MongoDb Content into code as per Lab 2 Instructions 13 Feb CT
- */
 package com.napier.sem;
 
 import java.sql.*;
+
 
 public class App {
     public static void main(String[] args)
@@ -13,13 +11,19 @@ public class App {
 
         // Connect to database
         a.connect();
+        // Get City
+        city city2 = a.getCity(1);
+        // Display results
+        a.displayCity(city2);
 
         // Disconnect from database
         a.disconnect();
     }
-        /**
-         * Connection to MySQL database.
-         */
+
+
+    /**
+     * Connection to MySQL database.
+     */
     private Connection con = null;
 
     /**
@@ -42,7 +46,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -51,6 +55,54 @@ public class App {
             } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
+        }
+    }
+
+    public city getCity(int ID)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ID, Name, CountryCode, District, Population "
+                            + "FROM city "
+                            + "WHERE ID = " + ID;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                city city2 = new city();
+                city2.ID = rset.getInt("ID");
+                city2.Name = rset.getString("Name");
+                city2.CountryCode = rset.getString("CountryCode");
+                city2.District = rset.getString("District");
+                city2.Population = rset.getInt("Population");
+                return city2;
+            } else
+                return null;
+        }
+        catch (Exception e)
+        {
+          System.out.println(e.getMessage());
+          System.out.println("Failed to get employee details");
+         return null;
+        }
+    }
+
+    public void displayCity(city city2)
+    {
+        if (city2 != null)
+        {
+            System.out.println(
+                    city2.ID + " "
+                            + city2.Name + " "
+                            + city2.CountryCode + "\n"
+                            + city2.District + "\n"
+                            + "Population:" + city2.Population + "\n");
         }
     }
     /**
