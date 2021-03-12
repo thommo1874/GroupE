@@ -3,7 +3,10 @@
  */
 package com.napier.sem;
 
+import com.sun.tools.javac.jvm.Code;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App {
     public static void main(String[] args)
@@ -13,6 +16,9 @@ public class App {
 
         // Connect to database
         a.connect();
+
+        // Extract employee salary information
+        ArrayList<country> countries = a.getPopulations();
 
         // Disconnect from database
         a.disconnect();
@@ -42,7 +48,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -53,6 +59,43 @@ public class App {
             }
         }
     }
+    /**
+     * Gets all the current employees and salaries.
+     * @return A list of all employees and salaries, or null if there is an error.
+     */
+    public ArrayList<country> getPopulations()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Code, country.Name, country.Population "
+                            + "FROM country "
+                            + "ORDER BY country.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract employee information
+            ArrayList<country> countries = new ArrayList<country>();
+            while (rset.next())
+            {
+                country country2 = new country();
+                country2.Code = rset.getString("country.Code");
+                country2.Name = rset.getString("country.Name");
+                country2.Population = rset.getInt("country.Population");
+                countries.add(country2);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
     /**
      * Disconnect from the MySQL database.
      */
