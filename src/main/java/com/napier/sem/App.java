@@ -3,8 +3,6 @@
  */
 package com.napier.sem;
 
-import com.sun.tools.javac.jvm.Code;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -19,6 +17,12 @@ public class App {
 
         // Extract employee salary information
         ArrayList<country> countries = a.getPopulations();
+
+        // Print salary report
+        a.printPopulations(countries);
+
+        // Test the size of the returned data
+        System.out.println(countries.size());
 
         // Disconnect from database
         a.disconnect();
@@ -60,8 +64,8 @@ public class App {
         }
     }
     /**
-     * Gets all the current employees and salaries.
-     * @return A list of all employees and salaries, or null if there is an error.
+     * Gets all countries and populations.
+     * @return A list of all countries and populations, or null if there is an error.
      */
     public ArrayList<country> getPopulations()
     {
@@ -95,7 +99,23 @@ public class App {
             return null;
         }
     }
-
+    /**
+     * Prints a list of countries.
+     * @param countries list of countries to print.
+     */
+    public void printPopulations(ArrayList<country> countries)
+    {
+        // Print header
+        System.out.printf("%-5s %-40s %-15s", "Code", "Name", "Population");
+        // Loop over all countries in the list
+        for (country country2 : countries)
+        {
+            String country_string =
+                    String.format("%-10s %-40s %-15s",
+                            country2.Code, country2.Name, country2.Population);
+            System.out.println(country_string);
+        }
+    }
     /**
      * Disconnect from the MySQL database.
      */
