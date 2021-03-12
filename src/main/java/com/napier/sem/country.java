@@ -64,4 +64,3 @@ public class country {
      */
     public String Code2;
 }
-
