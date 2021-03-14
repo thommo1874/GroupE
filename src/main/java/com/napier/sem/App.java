@@ -1,6 +1,3 @@
-/*
-  Adding MongoDb Content into code as per Lab 2 Instructions 13 Feb CT
- */
 package com.napier.sem;
 
 import java.sql.*;
@@ -15,11 +12,14 @@ public class App {
         // Connect to database
         a.connect();
 
-        // Extract employee salary information
+        // Extract country population information
         ArrayList<country> countries = a.getPopulations();
 
         // Print salary report
         a.printPopulations(countries);
+
+        // Print salary report
+        a.printContPops(countries);
 
         // Test the size of the returned data
         System.out.println(countries.size());
@@ -75,9 +75,9 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT country.Code, country.Name, country.Population "
+                    "SELECT country.Code, country.Name, country.Continent, country.Population "
                             + "FROM country "
-                            + "ORDER BY country.Population DESC";
+                            + "ORDER BY country.Continent ASC, country.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract employee information
@@ -87,6 +87,7 @@ public class App {
                 country country2 = new country();
                 country2.Code = rset.getString("country.Code");
                 country2.Name = rset.getString("country.Name");
+                country2.Continent = rset.getString("country.Continent");
                 country2.Population = rset.getInt("country.Population");
                 countries.add(country2);
             }
@@ -106,16 +107,35 @@ public class App {
     public void printPopulations(ArrayList<country> countries)
     {
         // Print header
-        System.out.printf("%-5s %-40s %-15s", "Code", "Name", "Population");
+        System.out.printf("%-5s %-50s %-15s", "Code", "Name", "Population");
         // Loop over all countries in the list
         for (country country2 : countries)
         {
             String country_string =
-                    String.format("%-10s %-40s %-15s",
+                    String.format("%-5s %-50s %-15s",
                             country2.Code, country2.Name, country2.Population);
             System.out.println(country_string);
         }
     }
+
+    /**
+     * Prints a list of countries.
+     * @param countries list of countries to print.
+     */
+    public void printContPops(ArrayList<country> countries)
+    {
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-15s", "Code", "Name", "Continent", "Population");
+        // Loop over all countries in the list
+        for (country country2 : countries)
+        {
+            String country_string =
+                    String.format("%-5s %-50s %-20s %-15s",
+                            country2.Code, country2.Name, country2.Continent, country2.Population);
+            System.out.println(country_string);
+        }
+    }
+
     /**
      * Disconnect from the MySQL database.
      */
