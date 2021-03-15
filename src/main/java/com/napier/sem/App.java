@@ -21,6 +21,9 @@ public class App {
         // Print salary report
         a.printContPops(countries);
 
+        // Print populations by region report
+        a.printRegPops(countries);
+
         // Test the size of the returned data
         System.out.println(countries.size());
 
@@ -75,9 +78,9 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT country.Code, country.Name, country.Continent, country.Population "
+                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
                             + "FROM country "
-                            + "ORDER BY country.Continent ASC, country.Population DESC";
+                            + "ORDER BY country.Region ASC, country.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract employee information
@@ -88,7 +91,9 @@ public class App {
                 country2.Code = rset.getString("country.Code");
                 country2.Name = rset.getString("country.Name");
                 country2.Continent = rset.getString("country.Continent");
+                country2.Region = rset.getString("country.Region");
                 country2.Population = rset.getInt("country.Population");
+                country2.Capital = rset.getInt("country.Capital");
                 countries.add(country2);
             }
             return countries;
@@ -107,35 +112,50 @@ public class App {
     public void printPopulations(ArrayList<country> countries)
     {
         // Print header
-        System.out.printf("%-5s %-50s %-15s", "Code", "Name", "Population");
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (country country2 : countries)
         {
             String country_string =
-                    String.format("%-5s %-50s %-15s",
-                            country2.Code, country2.Name, country2.Population);
+                    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                            country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
             System.out.println(country_string);
         }
     }
-
     /**
-     * Prints a list of countries.
+     * Prints a list of countries with population ordered by continent.
      * @param countries list of countries to print.
      */
     public void printContPops(ArrayList<country> countries)
     {
         // Print header
-        System.out.printf("%-5s %-50s %-20s %-15s", "Code", "Name", "Continent", "Population");
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (country country2 : countries)
         {
             String country_string =
-                    String.format("%-5s %-50s %-20s %-15s",
-                            country2.Code, country2.Name, country2.Continent, country2.Population);
+                    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                            country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
             System.out.println(country_string);
         }
     }
-
+    /**
+     * Prints a list of countries with population ordered by region.
+     * @param countries list of countries to print.
+     */
+    public void printRegPops(ArrayList<country> countries)
+    {
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        // Loop over all countries in the list
+        for (country country2 : countries)
+        {
+            String country_string =
+                    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                            country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
+            System.out.println(country_string);
+        }
+    }
     /**
      * Disconnect from the MySQL database.
      */
