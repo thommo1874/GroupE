@@ -24,6 +24,9 @@ public class App {
         // Print populations by region report
         a.printRegPops(countries);
 
+        // Print populations by region report
+        a.printTopPops(countries);
+
         // Test the size of the returned data
         System.out.println(countries.size());
 
@@ -80,7 +83,8 @@ public class App {
             String strSelect =
                     "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
                             + "FROM country "
-                            + "ORDER BY country.Region ASC, country.Population DESC";
+                            + "ORDER BY country.Population DESC "
+                            + "LIMIT 10";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Extract employee information
@@ -112,7 +116,7 @@ public class App {
     public void printPopulations(ArrayList<country> countries)
     {
         // Print header
-        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (country country2 : countries)
         {
@@ -129,7 +133,7 @@ public class App {
     public void printContPops(ArrayList<country> countries)
     {
         // Print header
-        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (country country2 : countries)
         {
@@ -146,7 +150,7 @@ public class App {
     public void printRegPops(ArrayList<country> countries)
     {
         // Print header
-        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
         // Loop over all countries in the list
         for (country country2 : countries)
         {
@@ -156,6 +160,24 @@ public class App {
             System.out.println(country_string);
         }
     }
+    /**
+     /* Prints a list of countries with population ordered by region.
+     /* @param countries list of countries to print.
+     */
+    public void printTopPops(ArrayList<country> countries)
+    {
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        //Loop over all countries in the list
+        for (country country2 : countries)
+        {
+            String country_string =
+                    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                           country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
+            System.out.println(country_string);
+        }
+    }
+
     /**
      * Disconnect from the MySQL database.
      */
