@@ -27,4 +27,5 @@ public class city {
      * Population
      */
     public int Population;
+    public String Continent;
 }
