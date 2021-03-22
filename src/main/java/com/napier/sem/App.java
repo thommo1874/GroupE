@@ -10,7 +10,19 @@ public class App {
         App a = new App();
 
         // Connect to database
-        a.connect("localhost:33060");
+        if (args.length < 1)
+        {
+            a.connect("localhost:3306");
+        }
+        else
+        {
+            a.connect(args[0]);
+        }
+
+        // Get Employee
+        city city2 = a.getCity(1);
+        // Display results
+        a.displayCity(city2);
 
         /** Country Related Reports
         // Extract country population information
@@ -85,7 +97,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -296,7 +308,7 @@ public class App {
                 city city2 = new city();
                 city2.ID = rset.getInt("ID");
                 city2.Name = rset.getString("Name");
-                city2.CountryCode = rset.getString("Country Code");
+                city2.CountryCode = rset.getString("CountryCode");
                 city2.District = rset.getString("District");
                 city2.Population = rset.getInt("Population");
                 return city2;
@@ -309,6 +321,19 @@ public class App {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
             return null;
+        }
+    }
+
+    public void displayCity(city city2)
+    {
+        if (city2 != null)
+        {
+            System.out.println(
+                    city2.ID + " "
+                            + city2.Name + " "
+                            + city2.CountryCode + "\n"
+                            + city2.District + "\n"
+                            + city2.Population + "\n");
         }
     }
     /**
