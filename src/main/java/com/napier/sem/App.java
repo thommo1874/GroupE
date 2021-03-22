@@ -34,6 +34,9 @@ public class App {
         // Extract country population information
         ArrayList<city> cities = a.getCityPopulations();
 
+        // Get City Information
+        a.getCity(cities);
+
         // Print city population report
         a.printCityPopulations(cities);
 
@@ -269,6 +272,31 @@ public class App {
     city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
     System.out.println(city_string);
     }
+    }
+    /**
+     * Identifies an individual city.
+     * @param cities details of a city.
+     */
+    public void getCity(ArrayList<city> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+        // Loop over all cities in the list
+        for (city city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-5s %-35s %-5s %-20s %-12s",
+                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
+            System.out.println(city_string);
+        }
     }
     /**
      * Prints a list of countries.

@@ -22,7 +22,7 @@ public class AppIntegrationTest
     @Test
     void testGetCityPopulations()
     {
-        city city2 = app.getCityPopulations(1);
+        city city2 = app.getCity(1);
         assertEquals(city2.ID, 1);
         assertEquals(city2.Name, "Kabul");
         assertEquals(city2.CountryCode, "AFG");
