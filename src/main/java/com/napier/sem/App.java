@@ -251,7 +251,7 @@ public class App {
 */
     public void printCityPopulations(ArrayList<city> cities)
     {
-        // Check employees is not null
+        // Check list is not null
         if (cities == null)
         {
             System.out.println("No cities");
@@ -276,11 +276,19 @@ public class App {
      */
     public void printCityContPopulations(ArrayList<city> cities)
     {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         // Print header
         System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
         // Loop over all cities in the list
         for (city city2 : cities)
         {
+            if (city2 == null)
+                continue;
             String city_string =
                     String.format("%-5s %-35s %-5s %-20s %-12s",
                             city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
@@ -293,11 +301,19 @@ public class App {
      */
     public void printCityRegPopulations(ArrayList<city> cities)
     {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         // Print header
         System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
         // Loop over all cities in the list
         for (city city2 : cities)
         {
+            if (city2 == null)
+                continue;
             String city_string =
                     String.format("%-5s %-35s %-5s %-20s %-12s",
                             city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
@@ -310,11 +326,19 @@ public class App {
      */
     public void printCityCountryPopulations(ArrayList<city> cities)
     {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         // Print header
         System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
         // Loop over all cities in the list
         for (city city2 : cities)
         {
+            if (city2 == null)
+                continue;
             String city_string =
                     String.format("%-5s %-35s %-5s %-20s %-12s",
                             city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
@@ -327,11 +351,19 @@ public class App {
      */
     public void printCityDistrictPopulations(ArrayList<city> cities)
     {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         // Print header
         System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
         // Loop over all cities in the list
         for (city city2 : cities)
         {
+            if (city2 == null)
+                continue;
             String city_string =
                     String.format("%-5s %-35s %-5s %-20s %-12s",
                             city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
@@ -344,11 +376,19 @@ public class App {
      */
     public void printCapitalCityPopulations(ArrayList<city> cities)
     {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         // Print header
         System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
         // Loop over all cities in the list
         for (city city2 : cities)
         {
+            if (city2 == null)
+                continue;
             String city_string =
                     String.format("%-5s %-35s %-5s %-20s %-12s",
                             city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
@@ -361,11 +401,19 @@ public class App {
      */
     public void printCapitalCityContPopulations(ArrayList<city> cities)
     {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         // Print header
         System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
         // Loop over all cities in the list
         for (city city2 : cities)
         {
+            if (city2 == null)
+                continue;
             String city_string =
                     String.format("%-5s %-35s %-5s %-20s %-12s",
                             city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
