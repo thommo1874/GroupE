@@ -20,7 +20,7 @@ public class AppIntegrationTest
     }
 
     @Test
-    void testGetCityPopulations()
+    void testGetCity()
     {
         city city2 = app.getCity(1);
         assertEquals(city2.ID, 1);

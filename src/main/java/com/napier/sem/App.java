@@ -35,7 +35,6 @@ public class App {
         ArrayList<city> cities = a.getCityPopulations();
 
         // Get City Information
-        a.getCity(cities);
 
         // Print city population report
         a.printCityPopulations(cities);
@@ -274,28 +273,42 @@ public class App {
     }
     }
     /**
-     * Identifies an individual city.
-     * @param cities details of a city.
+     * Prints a list of countries.
+     * @param //cities list of countries to print.
      */
-    public void getCity(ArrayList<city> cities)
+    public city getCity(int ID)
     {
-        // Check city is not null
-        if (cities == null)
+        try
         {
-            System.out.println("No cities");
-            return;
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ID, Name, CountryCode, District, Population "
+                            + "FROM city "
+                            + "WHERE ID = " + ID;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                city city2 = new city();
+                city2.ID = rset.getInt("ID");
+                city2.Name = rset.getString("Name");
+                city2.CountryCode = rset.getString("Country Code");
+                city2.District = rset.getString("District");
+                city2.Population = rset.getInt("Population");
+                return city2;
+            }
+            else
+                return null;
         }
-        // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
-        // Loop over all cities in the list
-        for (city city2 : cities)
+        catch (Exception e)
         {
-            if (city2 == null)
-                continue;
-            String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
-            System.out.println(city_string);
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
         }
     }
     /**
