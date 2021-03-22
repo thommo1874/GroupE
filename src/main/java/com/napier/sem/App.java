@@ -10,7 +10,7 @@ public class App {
         App a = new App();
 
         // Connect to database
-        a.connect();
+        a.connect("localhost:33060");
 
         /** Country Related Reports
         // Extract country population information
@@ -66,7 +66,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect ()
+    public void connect (String location)
     {
         try {
             // Load Database driver
