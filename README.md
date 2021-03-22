@@ -4,3 +4,4 @@
 - Develop Build Status [![Build Status](https://www.travis-ci.com/thommo1874/GroupE.svg?branch=develop)](https://www.travis-ci.com/thommo1874/GroupE)
 - License [![LICENSE](https://img.shields.io/github/license/thommo1874/GroupE.svg?style=flat-square)](https://github.com/thommo1874/GroupE/master/LICENSE)
 - Release [![Releases](https://img.shields.io/github/release/thommo1874/GroupE/all.svg?style=flat-square)](https://github.com/thommo1874/GroupE/releases)
+- [![codecov](https://codecov.io/gh/thommo1874/GroupE/branch/master/graph/badge.svg?token=UEV5P43OWF)](https://codecov.io/gh/thommo1874/GroupE)
