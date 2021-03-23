@@ -294,7 +294,7 @@ public class App {
     System.out.println(city_string);
     }
     }
-    public void addCity(city city2)
+    /**public void addCity(city city2)
     {
         try
         {
@@ -310,7 +310,7 @@ public class App {
             System.out.println("Failed to add city");
         }
     }
-
+*/
 
     /**
      * Prints a list of countries.
