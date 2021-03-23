@@ -8,20 +8,17 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AppIntegrationTest
-{
+public class AppIntegrationTest {
     static App app;
 
     @BeforeAll
-    static void init()
-    {
+    static void init() {
         app = new App();
         app.connect("localhost:33060");
     }
 
     @Test
-    void testGetCity()
-    {
+    void testGetCity() {
         city city2 = app.getCity(1);
         assertEquals(city2.ID, 1);
         assertEquals(city2.Name, "Kabul");
@@ -29,7 +26,7 @@ public class AppIntegrationTest
         assertEquals(city2.District, "Kabol");
         assertEquals(city2.Population, 1780000);
     }
-
+}
 /**    @Test
     void testGetCountry()
     {
@@ -60,7 +57,7 @@ public class AppIntegrationTest
         assertEquals(countrylanguage2.IsOfficial, "F");
         assertEquals(countrylanguage2.Percentage, 72.1);
     }*/
-    @Test
+/**    @Test
     void testAddCity() {
         city city2 = new city();
         city2.Name = "TestCity";
@@ -74,6 +71,4 @@ public class AppIntegrationTest
         assertEquals(city2.Population, 1234567);
 
     }
-
-
-}
+ */
