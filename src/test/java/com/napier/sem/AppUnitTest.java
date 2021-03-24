@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testing
+public class AppUnitTest
 {
     static App app;
     //static city city;
