@@ -3,6 +3,11 @@ package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * This Application has been built to deliver a range of City, Country and Language reports
+ * These reports are generally sorted by population
+ * There is also code to manage the required data base connection
+ */
 public class App {
     public static void main(String[] args)
     {
@@ -20,59 +25,100 @@ public class App {
         }
 
         // Get City
-        city city2 = a.getCity(1);
+        City city2 = a.getCity(1);
         // Display results
         a.displayCity(city2);
 
         // Get Country
-        //country country2 = a.getCountry("ZWB");
+        Country country2 = a.getCountry("ABW");
         // Display results
-        //a.displayCountry(country2);
+        a.displayCountry(country2);
 
         // Get Country Language
-        //countrylanguage countrylanguage2 = a.getLanguage("ZWB");
+        CountryLanguage countryLanguage2 = a.getLanguage("");
         // Display results
-        //a.displayCountryLanguage(countrylanguage2);
+        a.displayCountryLanguage(countryLanguage2);
 
-        /** Country Related Reports
-         // Extract country population information
-         ArrayList<country> countries = a.getPopulations();
-         // Print country population report
-         a.printPopulations(countries);
-         // Print continent population report
-         a.printContPops(countries);
-         // Print populations by region report
-         a.printRegPops(countries);
-         // Print top 10 populations by country report
-         a.printTopPops(countries);
-         // Test the size of the returned data
-         System.out.println(countries.size());
+        /**
+         * Country Related Reports Section
          */
+
+
+         //Extract country population information
+         ArrayList<Country> countries = a.getPopulations();
+
+         //Get Country Information Reports Task IDs 1 - 6
+
+         //Print country population report Task ID 1
+         a.printPopulations(countries);
+
+         //Print continent population report Task ID 2
+         a.printContPops(countries);
+
+         //Print populations by region report Task ID 3
+         a.printRegPops(countries);
+
+         //Print top 10 populations by country report Task ID 4
+         a.printTopPops(countries);
+
+         //Print top 10 populations by continent report - set to Europe Task ID 5
+         a.printTopContPops(countries);
+
+         //Print top 10 populations by region report - set to North America Task ID 6
+         a.printTopRegPops(countries);
+
+         //Test the size of the returned data
+         System.out.println(countries.size());
+
+        /**
+         * City Related Reports Section
+         */
+
         // Extract country population information
-        ArrayList<city> cities = a.getCityPopulations();
+        ArrayList<City> cities = a.getCityPopulations();
 
-        // Get City Information
+        // Get City Information Reports Task IDs 7 - 16
 
-        // Print city population report
+        // Print city population report Task ID 7
         a.printCityPopulations(cities);
 
-        // Print city population report grouped by continent
+        // Print city population report grouped by continent Task ID 8
         a.printCityContPopulations(cities);
 
-        // Print city population report grouped by region
+        // Print city population report grouped by region Task ID 9
         a.printCityRegPopulations(cities);
 
-        // Print city population report grouped by country
+        // Print city population report grouped by country Task ID 10
         a.printCityCountryPopulations(cities);
 
-        // Print city population report grouped by country
+        // Print city population report grouped by country Task ID 11
         a.printCityDistrictPopulations(cities);
 
-        // Print city population report grouped by country
-        a.printCapitalCityPopulations(cities);
+        // Print top 20 city population report Task ID 12
+        a.printTop20CityPopulations(cities);
+
+        // Print top 20 city population report grouped by continent - set to Asia Task ID 13
+        a.printTop20CityContPopulations(cities);
+
+        // Print top 20 city population report grouped by region - set to Caribbean Task ID 14
+        a.printTop20CityRegPopulations(cities);
+
+        // Print top 20 city population report grouped by country - set to United States Task ID 15
+        a.printTop20CityCountryPopulations(cities);
+
+        // Print top 20 city population report grouped by district - set to Punjab Task ID 16
+        a.printTop20CityDistPopulations(cities);
+
+        /**
+         * Capital City Related Reports Section
+         */
 
         // Print city population report grouped by country
-        a.printCapitalCityContPopulations(cities);
+        //a.printCapitalCityPopulations(cities);
+
+        // Print city population report grouped by country
+        //a.printCapitalCityContPopulations(cities);
+
 
         // Disconnect from database
         a.disconnect();
@@ -116,111 +162,201 @@ public class App {
     /** Country Reports
      * Gets all countries and populations.
      * @return A list of all countries and populations, or null if there is an error.
-    public ArrayList<country> getPopulations()
-    {
-    try
-    {
-    // Create an SQL statement
-    Statement stmt = con.createStatement();
-    // Create string for SQL statement
-    String strSelect =
-    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
-    + "FROM country "
-    + "GROUP BY country.Continent"
-    + "LIMIT 10";
-    // Execute SQL statement
-    ResultSet rset = stmt.executeQuery(strSelect);
-    // Extract employee information
-    ArrayList<country> countries = new ArrayList<country>();
-    while (rset.next())
-    {
-    country country2 = new country();
-    country2.Code = rset.getString("country.Code");
-    country2.Name = rset.getString("country.Name");
-    country2.Continent = rset.getString("country.Continent");
-    country2.Region = rset.getString("country.Region");
-    country2.Population = rset.getInt("country.Population");
-    country2.Capital = rset.getInt("country.Capital");
-    countries.add(country2);
-    }
-    return countries;
-    }
-    catch (Exception e)
-    {
-    System.out.println(e.getMessage());
-    System.out.println("Failed to get country details");
-    return null;
-    }
+     */
+        public ArrayList<Country> getPopulations()
+        {
+            try
+            {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                    "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, city.Name "
+                            + "FROM city, country "
+                            + "WHERE country.Capital = city.id AND country.Region = 'Middle East' "
+                            + "ORDER BY country.Population DESC "
+                            + "LIMIT 10 ";
+
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Extract employee information
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country2 = new Country();
+                    country2.code = rset.getString("country.Code");
+                    country2.name = rset.getString("country.Name");
+                    country2.continent = rset.getString("country.Continent");
+                    country2.region = rset.getString("country.Region");
+                    country2.population = rset.getInt("country.Population");
+                    country2.capitalName = rset.getString("city.Name");
+                    countries.add(country2);
+                }
+                return countries;
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+                System.out.println("Failed to get country details");
+                return null;
+            }
     }
     /**
      * Prints a list of countries.
-     * @param //countries list of countries to print.
-    public void printPopulations(ArrayList<country> countries)
+     * @param countries list of countries to print.
+     */
+    public void printPopulations(ArrayList<Country> countries)
     {
-    // Print header
-    System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
-    // Loop over all countries in the list
-    for (country country2 : countries)
-    {
-    String country_string =
-    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
-    country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
-    System.out.println(country_string);
-    }
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+        String country_string =
+            String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                country2.code, country2.name, country2.continent, country2.region, country2.population, country2.capitalName);
+        System.out.println(country_string);
+        }
     }
     /**
      * Prints a list of countries with population ordered by continent.
-     * @param //countries list of countries to print.
-    public void printContPops(ArrayList<country> countries)
+     * @param countries list of countries to print.
+     */
+    public void printContPops(ArrayList<Country> countries)
     {
-    // Print header
-    System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
-    // Loop over all countries in the list
-    for (country country2 : countries)
-    {
-    String country_string =
-    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
-    country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
-    System.out.println(country_string);
-    }
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+        String country_string =
+            String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                country2.code, country2.name, country2.continent, country2.region, country2.population, country2.capitalName);
+        System.out.println(country_string);
+        }
     }
     /**
      * Prints a list of countries with population ordered by region.
-     * @param //countries list of countries to print.
-    public void printRegPops(ArrayList<country> countries)
+     * @param countries list of countries to print.
+     */
+    public void printRegPops(ArrayList<Country> countries)
     {
-    // Print header
-    System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
-    // Loop over all countries in the list
-    for (country country2 : countries)
-    {
-    String country_string =
-    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
-    country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
-    System.out.println(country_string);
-    }
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+        String country_string =
+            String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                country2.code, country2.name, country2.continent, country2.region, country2.population, country2.capitalName);
+        System.out.println(country_string);
+        }
     }
     /**
     /* Prints a list of countries with top 10 highest populations.
-    /* @param countries list of countries to print.
-    public void printTopPops(ArrayList<country> countries)
+     * @param countries list of countries to print.
+     */
+    public void printTopPops(ArrayList<Country> countries)
     {
-    // Print header
-    System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
-    //Loop over all countries in the list
-    for (country country2 : countries)
-    {
-    String country_string =
-    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
-    country2.Code, country2.Name, country2.Continent, country2.Region, country2.Population, country2.Capital);
-    System.out.println(country_string);
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        //Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+        String country_string =
+            String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                country2.code, country2.name, country2.continent, country2.region, country2.population, country2.capitalName);
+        System.out.println(country_string);
+        }
     }
+    /**
+     /* Prints a list of countries with top 10 highest populations.
+     * @param countries list of countries to print.
+     */
+    public void printTopContPops(ArrayList<Country> countries)
+    {
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        //Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+            String country_string =
+                    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                            country2.code, country2.name, country2.continent, country2.region, country2.population, country2.capitalName);
+            System.out.println(country_string);
+        }
+    }
+    /**
+     /* Prints a list of the top ten countries with highest populations within a Region
+     * @param countries list of countries to print.
+     */
+    public void printTopRegPops(ArrayList<Country> countries)
+    {
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-5s %-50s %-20s %-30s %-15s %-20s\n", "Code", "Name", "Continent", "Region", "Population", "Capital");
+        //Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+            String country_string =
+                    String.format("%-5s %-50s %-20s %-30s %-15s %-20s",
+                            country2.code, country2.name, country2.continent, country2.region, country2.population, country2.capitalName);
+            System.out.println(country_string);
+        }
     }
     /**
      * Gets all cities and populations.
      * @return A list of all cities and populations, or null if there is an error.
      */
-    public ArrayList<city> getCityPopulations()
+    public ArrayList<City> getCityPopulations()
     {
         try
         {
@@ -228,23 +364,23 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                    "SELECT city.Name, country.Name, city.District, city.Population "
                             + "FROM city, country "
-                            + "WHERE city.ID = country.Capital AND country.Continent = 'Europe' "
-                            + "ORDER BY city.Population DESC ";
+                            + "WHERE city.CountryCode = country.Code AND city.District = 'Punjab' "
+                            + "ORDER BY city.Population DESC "
+                            + "LIMIT 20";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Extract employee information
-            ArrayList<city> cities = new ArrayList<>();
+            // Extract city information
+            ArrayList<City> cities = new ArrayList<>();
             while (rset.next())
             {
-                city city2 = new city();
-                city2.ID = rset.getInt("city.ID");
-                city2.Name = rset.getString("city.Name");
-                city2.CountryCode = rset.getString("city.CountryCode");
-                city2.District = rset.getString("city.District");
-                city2.Population = rset.getInt("city.Population");
+                City city2 = new City();
+                city2.name = rset.getString("city.Name");
+                city2.country = rset.getString("country.Name");
+                city2.district = rset.getString("city.District");
+                city2.population = rset.getInt("city.Population");
                 cities.add(city2);
             }
             return cities;
@@ -258,10 +394,10 @@ public class App {
     }
 
     /**
-     * Prints a list of countries.
+     * Prints a list of cities by population decreasing.
      * @param cities list of countries to print.
      */
-    public void printCityPopulations(ArrayList<city> cities)
+    public void printCityPopulations(ArrayList<City> cities)
     {
         // Check list is not null
         if (cities == null)
@@ -270,15 +406,15 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
         // Loop over all cities in the list
-        for (city city2 : cities)
+        for (City city2 : cities)
         {
             if (city2 == null)
                 continue;
             String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
             System.out.println(city_string);
         }
     }
@@ -301,10 +437,10 @@ public class App {
      */
 
     /**
-     * Prints a list of countries.
+     * Prints a list of cities.
      * @param //cities list of countries to print.
      */
-    public city getCity(int ID)
+    public City getCity(int ID)
     {
         try
         {
@@ -321,12 +457,12 @@ public class App {
             // Check one is returned
             if (rset.next())
             {
-                city city2 = new city();
-                city2.ID = rset.getInt("ID");
-                city2.Name = rset.getString("Name");
-                city2.CountryCode = rset.getString("CountryCode");
-                city2.District = rset.getString("District");
-                city2.Population = rset.getInt("Population");
+                City city2 = new City();
+                city2.iD = rset.getInt("ID");
+                city2.name = rset.getString("Name");
+                city2.countryCode = rset.getString("CountryCode");
+                city2.district = rset.getString("District");
+                city2.population = rset.getInt("Population");
                 return city2;
             }
             else
@@ -340,16 +476,16 @@ public class App {
         }
     }
 
-    public void displayCity(city city2)
+    public void displayCity(City city2)
     {
         if (city2 != null)
         {
             System.out.println(
-                    city2.ID + " "
-                            + city2.Name + " "
-                            + city2.CountryCode + "\n"
-                            + city2.District + "\n"
-                            + city2.Population + "\n");
+                    city2.iD + " "
+                            + city2.name + " "
+                            + city2.countryCode + "\n"
+                            + city2.district + "\n"
+                            + city2.population + "\n");
         }
     }
     /**
@@ -357,36 +493,36 @@ public class App {
      * @param //cities list of countries to print.
      * @return
      */
-    public country getCountry(String Code) {
+    public Country getCountry(String Code) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Code, Name, Continent, Region, SurfaceArea, IndepYear, Population, LifeExpectancy, GNP, GNPOld, Local Name, GovernmentForm, HeadOfState, Capital, Code2 "
+                    "SELECT Code, Name, Continent, Region, SurfaceArea, IndepYear, Population, LifeExpectancy, GNP, GNPOld, LocalName, GovernmentForm, HeadOfState, Capital, Code2 "
                             + "FROM country "
-                            + "WHERE Code = " + Code;
+                            + "WHERE Code = " + "Code";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new city if valid.
             // Check one is returned
             if (rset.next()) {
-                country country2 = new country();
-                country2.Code = rset.getString("country.Code");
-                country2.Name = rset.getString("country.Name");
-                country2.Continent = rset.getString("country.Continent");
-                country2.Region = rset.getString("country.Region");
-                country2.SurfaceArea = rset.getInt("country.SurfaceArea");
-                country2.IndepYear = rset.getInt("country.IndepYear");
-                country2.Population = rset.getInt("country.Population");
-                country2.LifeExpectancy = rset.getInt("country.LifeExpectancy");
-                country2.GNP = rset.getInt("country.GNP");
-                country2.GNPOld = rset.getInt("country.GNPOld");
-                country2.LocalName = rset.getString("country.LocalName");
-                country2.GovernmentForm = rset.getString("country.GovernmentForm");
-                country2.HeadOfState = rset.getString("country.HeadOfState");
-                country2.Capital = rset.getInt("country.Capital");
-                country2.Code2 = rset.getString("country.Code2");
+                Country country2 = new Country();
+                country2.code = rset.getString("country.Code");
+                country2.name = rset.getString("country.Name");
+                country2.continent = rset.getString("country.Continent");
+                country2.region = rset.getString("country.Region");
+                country2.surfaceArea = rset.getInt("country.SurfaceArea");
+                country2.indepYear = rset.getInt("country.IndepYear");
+                country2.population = rset.getInt("country.Population");
+                country2.lifeExpectancy = rset.getInt("country.LifeExpectancy");
+                country2.gnp = rset.getInt("country.GNP");
+                country2.gnpOld = rset.getInt("country.GNPOld");
+                country2.localName = rset.getString("country.LocalName");
+                country2.governmentForm = rset.getString("country.GovernmentForm");
+                country2.headOfState = rset.getString("country.HeadOfState");
+                country2.capital = rset.getInt("country.Capital");
+                country2.code2 = rset.getString("country.Code2");
                 return country2;
             } else
                 return null;
@@ -397,35 +533,34 @@ public class App {
         }
     }
 
-
-/**    public void displayCountry(country country2)
- {
- if (country2 != null)
- {
- System.out.println(
- country2.Code + " "
- + country2.Name + " "
- + country2.Continent + "\n"
- + country2.Region + "\n"
- + country2.SurfaceArea + "\n"
- + country2.IndepYear + "\n"
- + country2.Population + "\n"
- + country2.LifeExpectancy + "\n"
- + country2.GNP + "\n"
- + country2.GNPOld + "\n"
- + country2.LocalName + "\n"
- + country2.GovernmentForm + "\n"
- + country2.HeadOfState + "\n"
- + country2.Capital + "\n"
- + country2.Code2 + "\n");
- }
+    public void displayCountry(Country country2)
+    {
+        if (country2 != null)
+        {
+            System.out.println(
+                country2.code + " "
+                + country2.name + " "
+                + country2.continent + "\n"
+                + country2.region + "\n"
+                + country2.surfaceArea + "\n"
+                + country2.indepYear + "\n"
+                + country2.population + "\n"
+                + country2.lifeExpectancy + "\n"
+                + country2.gnp + "\n"
+                + country2.gnpOld + "\n"
+                + country2.localName + "\n"
+                + country2.governmentForm + "\n"
+                + country2.headOfState + "\n"
+                + country2.capital + "\n"
+                + country2.code2 + "\n");
+        }
  }
  /**
  * Prints a list of countries.
  * @param //cities list of countries to print.
  * @return
  */
-    /**public countrylanguage getLanguage(String Code)
+    public CountryLanguage getLanguage(String Code)
      {
      try
      {
@@ -442,12 +577,12 @@ public class App {
      // Check one is returned
      if (rset.next())
      {
-     countrylanguage countrylanguage2 = new countrylanguage();
-     countrylanguage2.CountryCode = rset.getString("CountryCode");
-     countrylanguage2.Language = rset.getString("Language");
-     countrylanguage2.IsOfficial = rset.getString("IsOfficial");
-     countrylanguage2.Percentage = rset.getInt("Percentage");
-     return countrylanguage2;
+     CountryLanguage countryLanguage2 = new CountryLanguage();
+     countryLanguage2.countryCode = rset.getString("CountryCode");
+     countryLanguage2.language = rset.getString("Language");
+     countryLanguage2.isOfficial = rset.getString("IsOfficial");
+     countryLanguage2.percentage = rset.getInt("Percentage");
+     return countryLanguage2;
      }
      else
      return null;
@@ -459,23 +594,25 @@ public class App {
      return null;
      }
      }
-     /** public void displayCountryLanguage(countrylanguage countrylanguage2)
+      public void displayCountryLanguage(CountryLanguage countryLanguage2)
      {
-     if (countrylanguage2 != null)
+     if (countryLanguage2 != null)
      {
      System.out.println(
-     countrylanguage2.CountryCode + " "
-     + countrylanguage2.Language + " "
-     + countrylanguage2.IsOfficial + "\n"
-     + countrylanguage2.Percentage + "\n");
+     countryLanguage2.countryCode + " "
+     + countryLanguage2.language + " "
+     + countryLanguage2.isOfficial + "\n"
+     + countryLanguage2.percentage + "\n");
      }
      }
-     */
+
+
+
     /**
-     * Prints a list of countries.
-     * @param cities list of countries to print.
+     * Prints a list of cities.
+     * @param cities list of cities to print.
      */
-    public void printCityContPopulations(ArrayList<city> cities)
+    public void printCityContPopulations(ArrayList<City> cities)
     {
         // Check city is not null
         if (cities == null)
@@ -484,23 +621,23 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
         // Loop over all cities in the list
-        for (city city2 : cities)
+        for (City city2 : cities)
         {
             if (city2 == null)
                 continue;
             String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
             System.out.println(city_string);
         }
     }
     /**
-     * Prints a list of countries.
-     * @param cities list of countries to print.
+     * Prints a list of cities.
+     * @param cities list of cities to print.
      */
-    public void printCityRegPopulations(ArrayList<city> cities)
+    public void printCityRegPopulations(ArrayList<City> cities)
     {
         // Check city is not null
         if (cities == null)
@@ -509,23 +646,23 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
         // Loop over all cities in the list
-        for (city city2 : cities)
+        for (City city2 : cities)
         {
             if (city2 == null)
                 continue;
             String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
             System.out.println(city_string);
         }
     }
     /**
-     * Prints a list of countries.
-     * @param cities list of countries to print.
+     * Prints a list of cities.
+     * @param cities list of cities to print.
      */
-    public void printCityCountryPopulations(ArrayList<city> cities)
+    public void printCityCountryPopulations(ArrayList<City> cities)
     {
         // Check city is not null
         if (cities == null)
@@ -534,23 +671,23 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
         // Loop over all cities in the list
-        for (city city2 : cities)
+        for (City city2 : cities)
         {
             if (city2 == null)
                 continue;
             String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
             System.out.println(city_string);
         }
     }
     /**
-     * Prints a list of countries sorted by district pop desc.
-     * @param cities list of countries to print.
+     * Prints a list of cities sorted by district pop desc.
+     * @param cities list of cities to print.
      */
-    public void printCityDistrictPopulations(ArrayList<city> cities)
+    public void printCityDistrictPopulations(ArrayList<City> cities)
     {
         // Check city is not null
         if (cities == null)
@@ -559,68 +696,199 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
         // Loop over all cities in the list
-        for (city city2 : cities)
+        for (City city2 : cities)
         {
             if (city2 == null)
                 continue;
             String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
             System.out.println(city_string);
         }
     }
+
+
+    /**
+     * Prints a top twenty list of cities by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTop20CityPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
+            System.out.println(city_string);
+        }
+    }
+
+    /**
+     * Prints a top ten list of cities within a named continent by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTop20CityContPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-25s %-40s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
+            System.out.println(city_string);
+        }
+    }
+
+    /**
+     * Prints a top ten list of cities within a named continent by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTop20CityRegPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-30s %-25s %-25s %-12s \n", "Name", "Country", "District", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-30s %-25s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
+            System.out.println(city_string);
+        }
+    }
+
+    /**
+     * Prints a top twenty list of cities within a named country by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTop20CityCountryPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-30s %-25s %-25s %-12s \n", "Name", "Country", "District", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-30s %-25s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
+            System.out.println(city_string);
+        }
+    }
+    /**
+     * Prints a top twenty list of cities within a named district by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTop20CityDistPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-30s %-25s %-25s %-12s \n", "Name", "Country", "District", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-30s %-25s %-25s %-12s",
+                            city2.name, city2.country, city2.district, city2.population);
+            System.out.println(city_string);
+        }
+    }
+
     /**
      * Prints a list of capital cities by pop decreasing.
      * @param cities list of countries to print.
      */
-    public void printCapitalCityPopulations(ArrayList<city> cities)
-    {
-        // Check city is not null
-        if (cities == null)
-        {
-            System.out.println("No cities");
-            return;
-        }
-        // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
-        // Loop over all cities in the list
-        for (city city2 : cities)
-        {
-            if (city2 == null)
-                continue;
-            String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
-            System.out.println(city_string);
-        }
-    }
-    /**
+    /**public void printCapitalCityPopulations(ArrayList<City> cities)
+     {
+     // Check city is not null
+     if (cities == null)
+     {
+     System.out.println("No cities");
+     return;
+     }
+     // Print header
+     System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+     // Loop over all cities in the list
+     for (City city2 : cities)
+     {
+     if (city2 == null)
+     continue;
+     String city_string =
+     String.format("%-5s %-35s %-5s %-20s %-12s",
+     city2.iD, city2.name, city2.countryCode, city2.district, city2.population);
+     System.out.println(city_string);
+     }
+     }
+     /**
      * Prints a list of capital cities within a specific continent by pop decreasing.
      * @param cities list of countries to print.
      */
-    public void printCapitalCityContPopulations(ArrayList<city> cities)
-    {
-        // Check city is not null
-        if (cities == null)
-        {
-            System.out.println("No cities");
-            return;
-        }
-        // Print header
-        System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
-        // Loop over all cities in the list
-        for (city city2 : cities)
-        {
-            if (city2 == null)
-                continue;
-            String city_string =
-                    String.format("%-5s %-35s %-5s %-20s %-12s",
-                            city2.ID, city2.Name, city2.CountryCode, city2.District, city2.Population);
-            System.out.println(city_string);
-        }
-    }
+    /**public void printCapitalCityContPopulations(ArrayList<City> cities)
+     {
+     // Check city is not null
+     if (cities == null)
+     {
+     System.out.println("No cities");
+     return;
+     }
+     // Print header
+     System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
+     // Loop over all cities in the list
+     for (City city2 : cities)
+     {
+     if (city2 == null)
+     continue;
+     String city_string =
+     String.format("%-5s %-35s %-5s %-20s %-12s",
+     city2.iD, city2.name, city2.countryCode, city2.district, city2.population);
+     System.out.println(city_string);
+     }
+     }
 
     /**
      * Disconnect from the MySQL database.

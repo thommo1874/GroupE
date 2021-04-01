@@ -2,65 +2,70 @@ package com.napier.sem;
 /**
  * Represents a country
  */
-public class country {
+public class Country {
     /**
      * Code
      */
-    public String Code;
+    public String code;
     /**
      * Country name
      */
-    public String Name;
+    public String name;
     /**
      * Continent
      */
-    public String Continent;
+    public String continent;
     /**
      * Region
      */
-    public String Region;
+    public String region;
     /**
      * Surface Area
      */
-    public double SurfaceArea;
+    public double surfaceArea;
     /**
      * Independence Year
      */
-    public int IndepYear;
+    public int indepYear;
     /**
      * Population
      */
-    public int Population;
+    public int population;
     /**
      * Life Expectancy
      */
-    public double LifeExpectancy;
+    public double lifeExpectancy;
     /**
      * GNP
      */
-    public double GNP;
+    public double gnp;
     /**
      * GNP Old
      */
-    public double GNPOld;
+    public double gnpOld;
     /**
      * Local name
      */
-    public String LocalName;
+    public String localName;
     /**
      * Government Form
      */
-    public String GovernmentForm;
+    public String governmentForm;
     /**
      * Head of State
      */
-    public String HeadOfState;
+    public String headOfState;
     /**
      * Capital
      */
-    public int Capital;
+    public int capital;
     /**
      * Code2
      */
-    public String Code2;
+    public String code2;
+
+    /**
+     * Capital Name
+     */
+    public String capitalName;
 }

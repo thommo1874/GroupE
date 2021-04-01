@@ -2,21 +2,21 @@ package com.napier.sem;
 /**
  * Represents a Countries Language
  */
-public class countrylanguage{
+public class CountryLanguage {
     /**
      * Country Code
      */
-    public String CountryCode;
+    public String countryCode;
     /**
      * Language
      */
-    public String Language;
+    public String language;
     /**
      * Is Official Language
      */
-    public String IsOfficial;
+    public String isOfficial;
     /**
      * Percenatge of speakers
      */
-    public double Percentage;
+    public double percentage;
 }
