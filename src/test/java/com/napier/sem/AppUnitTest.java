@@ -576,6 +576,72 @@ public class AppUnitTest {
         cities.add(city2);
         app.printTop20CityDistPopulations(cities);
     }
+    @Test
+    void printCapitalCityPopulationsTestNull()
+    {
+        app.printCapitalCityPopulations(null);
+    }
+
+    @Test
+    void printCapitalCityPopulationsTestEmpty()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        app.printCapitalCityPopulations(cities);
+    }
+
+    @Test
+    void printCapitalCityPopulationsTestContainsNull()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printCapitalCityPopulations(cities);
+    }
+    @Test
+    void printCapitalCityPopulations()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        City city2 = new City();
+        city2.iD = 1;
+        city2.name = "Kabul";
+        city2.countryCode = "AFG";
+        city2.district = "Kabol";
+        city2.population = 1780000;
+        cities.add(city2);
+        app.printCapitalCityPopulations(cities);
+    }
+    @Test
+    void printCapitalCityContPopulationsTestNull()
+    {
+        app.printCapitalCityContPopulations(null);
+    }
+
+    @Test
+    void printCapitalCityContPopulationsTestEmpty()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        app.printCapitalCityContPopulations(cities);
+    }
+
+    @Test
+    void printCapitalCityContPopulationsTestContainsNull()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printCapitalCityContPopulations(cities);
+    }
+    @Test
+    void printCapitalCityContPopulations()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        City city2 = new City();
+        city2.iD = 1;
+        city2.name = "Kabul";
+        city2.countryCode = "AFG";
+        city2.district = "Kabol";
+        city2.population = 1780000;
+        cities.add(city2);
+        app.printCapitalCityContPopulations(cities);
+    }
 }
     /**@Test
     void printCapitalCityPopulationsTestNull()

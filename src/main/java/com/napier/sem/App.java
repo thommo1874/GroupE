@@ -113,11 +113,23 @@ public class App {
          * Capital City Related Reports Section
          */
 
-        // Print city population report grouped by country
-        //a.printCapitalCityPopulations(cities);
+        // Print capital city population report grouped by country
+        a.printCapitalCityPopulations(cities);
 
-        // Print city population report grouped by country
-        //a.printCapitalCityContPopulations(cities);
+        // Print capital city population report grouped by continent
+        a.printCapitalCityContPopulations(cities);
+
+        // Print city population report grouped by region
+        //a.printCapitalCityRegPopulations(cities);
+
+        // Print Top 20 capital city populations
+        //a.printTopCapitalCityPopulations(cities);
+
+        // Print Top 20 capital city populations by continent
+        //a.printTopCapitalCityContPopulations(cities);
+
+        // Print Top 20 capital city populations by region
+        //a.printTopCapitalCityRegPopulations(cities);
 
 
         // Disconnect from database
@@ -364,11 +376,11 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, country.Name, city.District, city.Population "
+                    "SELECT city.Name, country.Name, city.Population "
                             + "FROM city, country "
-                            + "WHERE city.CountryCode = country.Code AND city.District = 'Punjab' "
-                            + "ORDER BY city.Population DESC "
-                            + "LIMIT 20";
+                            + "WHERE city.ID = country.Capital "
+                            + "ORDER BY country.Continent ASC, city.Population DESC ";
+                           // + "LIMIT 20";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -379,7 +391,7 @@ public class App {
                 City city2 = new City();
                 city2.name = rset.getString("city.Name");
                 city2.country = rset.getString("country.Name");
-                city2.district = rset.getString("city.District");
+                //city2.district = rset.getString("city.District");
                 city2.population = rset.getInt("city.Population");
                 cities.add(city2);
             }
@@ -406,15 +418,15 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("%-25s %-40s %-25s %-12s \n", "Name", "Country", "District", "Population");
+        System.out.printf("%-25s %-45s %-12s \n", "Name", "Country", "Population");
         // Loop over all cities in the list
         for (City city2 : cities)
         {
             if (city2 == null)
                 continue;
             String city_string =
-                    String.format("%-25s %-40s %-25s %-12s",
-                            city2.name, city2.country, city2.district, city2.population);
+                    String.format("%-25s %-45s %-12s",
+                            city2.name, city2.country, city2.population);
             System.out.println(city_string);
         }
     }
@@ -843,51 +855,51 @@ public class App {
      * Prints a list of capital cities by pop decreasing.
      * @param cities list of countries to print.
      */
-    /**public void printCapitalCityPopulations(ArrayList<City> cities)
+    public void printCapitalCityPopulations(ArrayList<City> cities)
      {
-     // Check city is not null
-     if (cities == null)
-     {
-     System.out.println("No cities");
-     return;
-     }
-     // Print header
-     System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
-     // Loop over all cities in the list
-     for (City city2 : cities)
-     {
-     if (city2 == null)
-     continue;
-     String city_string =
-     String.format("%-5s %-35s %-5s %-20s %-12s",
-     city2.iD, city2.name, city2.countryCode, city2.district, city2.population);
-     System.out.println(city_string);
-     }
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-35s %-45s %-12s \n","Name", "Country", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                String.format("%-35s %-45s %-12s",
+                    city2.name, city2.country, city2.population);
+            System.out.println(city_string);
+        }
      }
      /**
      * Prints a list of capital cities within a specific continent by pop decreasing.
      * @param cities list of countries to print.
      */
-    /**public void printCapitalCityContPopulations(ArrayList<City> cities)
+    public void printCapitalCityContPopulations(ArrayList<City> cities)
      {
-     // Check city is not null
-     if (cities == null)
+        // Check city is not null
+        if (cities == null)
      {
-     System.out.println("No cities");
-     return;
+            System.out.println("No cities");
+            return;
      }
-     // Print header
-     System.out.printf("%-5s %-35s %-5s %-20s %-12s \n", "ID", "Name", "Code", "District", "Population");
-     // Loop over all cities in the list
-     for (City city2 : cities)
-     {
-     if (city2 == null)
-     continue;
-     String city_string =
-     String.format("%-5s %-35s %-5s %-20s %-12s",
-     city2.iD, city2.name, city2.countryCode, city2.district, city2.population);
-     System.out.println(city_string);
-     }
+        // Print header
+        System.out.printf("%-35s %-45s %-12s \n", "Name", "Country", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                String.format("%-35s %-45s %-12s",
+                        city2.name, city2.country, city2.population);
+                System.out.println(city_string);
+        }
      }
 
     /**
