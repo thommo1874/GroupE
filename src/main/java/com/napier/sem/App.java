@@ -120,16 +120,16 @@ public class App {
         a.printCapitalCityContPopulations(cities);
 
         // Print city population report grouped by region
-        //a.printCapitalCityRegPopulations(cities);
+        a.printCapitalCityRegPopulations(cities);
 
         // Print Top 20 capital city populations
-        //a.printTopCapitalCityPopulations(cities);
+        a.printTopCapitalCityPopulations(cities);
 
-        // Print Top 20 capital city populations by continent
-        //a.printTopCapitalCityContPopulations(cities);
+        // Print Top 20 capital city populations by continent set to Asia
+        a.printTopCapitalCityContPopulations(cities);
 
-        // Print Top 20 capital city populations by region
-        //a.printTopCapitalCityRegPopulations(cities);
+        // Print Top 20 capital city populations by region set to Middle East
+        a.printTopCapitalCityRegPopulations(cities);
 
 
         // Disconnect from database
@@ -378,9 +378,9 @@ public class App {
             String strSelect =
                     "SELECT city.Name, country.Name, city.Population "
                             + "FROM city, country "
-                            + "WHERE city.ID = country.Capital "
-                            + "ORDER BY country.Continent ASC, city.Population DESC ";
-                           // + "LIMIT 20";
+                            + "WHERE city.ID = country.Capital AND country.Region = 'Middle East' "
+                            + "ORDER BY city.Population DESC "
+                            + "LIMIT 20 ";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -901,7 +901,107 @@ public class App {
                 System.out.println(city_string);
         }
      }
+    /**
+     * Prints a list of capital cities within a specific region by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printCapitalCityRegPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-35s %-45s %-12s \n", "Name", "Country", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-35s %-45s %-12s",
+                            city2.name, city2.country, city2.population);
+            System.out.println(city_string);
+        }
+    }
+    /**
+     * Prints a list of capital cities within a specific region by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTopCapitalCityPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-35s %-45s %-12s \n", "Name", "Country", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-35s %-45s %-12s",
+                            city2.name, city2.country, city2.population);
+            System.out.println(city_string);
+        }
+    }
 
+    /**
+     * Prints a list of capital cities within a specific region by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTopCapitalCityContPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-35s %-45s %-12s \n", "Name", "Country", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-35s %-45s %-12s",
+                            city2.name, city2.country, city2.population);
+            System.out.println(city_string);
+        }
+    }
+    /**
+     * Prints a list of capital cities within a specific region by pop decreasing.
+     * @param cities list of countries to print.
+     */
+    public void printTopCapitalCityRegPopulations(ArrayList<City> cities)
+    {
+        // Check city is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-35s %-45s %-12s \n", "Name", "Country", "Population");
+        // Loop over all cities in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-35s %-45s %-12s",
+                            city2.name, city2.country, city2.population);
+            System.out.println(city_string);
+        }
+    }
     /**
      * Disconnect from the MySQL database.
      */
