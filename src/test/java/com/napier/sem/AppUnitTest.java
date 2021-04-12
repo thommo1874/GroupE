@@ -757,5 +757,129 @@ public class AppUnitTest {
         cities.add(city2);
         app.printTopCapitalCityRegPopulations(cities);
     }
+
+    @Test
+    void printWorldPopTestNull() {
+        app.printWorldPop(null);
+    }
+
+    @Test
+    void printWorldPopTestEmpty() {
+        ArrayList<Country> countries = new ArrayList<>();
+        app.printWorldPop(countries);
+    }
+
+    @Test
+    void printWorldPopTestContainsNull() {
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+        app.printWorldPop(countries);
+    }
+
+    @Test
+    void printWorldPop() {
+        ArrayList<Country> countries = new ArrayList<>();
+        Country country2 = new Country();
+        country2.code = "AGO";
+        country2.name = "Angola";
+        country2.continent = "Africa";
+        country2.region = "Central Africa";
+        country2.surfaceArea = 1246700.00;
+        country2.indepYear = 1975;
+        country2.population = 12878000;
+        country2.lifeExpectancy = 38.3;
+        country2.gnp = 6648.00;
+        country2.gnpOld = 7984.00;
+        country2.localName = "Angola";
+        country2.governmentForm = "Republic";
+        country2.headOfState = "José Eduardo dos Santos";
+        country2.capital = 56;
+        country2.code2 = "AO";
+        countries.add(country2);
+        app.printWorldPop(countries);
+    }
+    @Test
+    void printWorldPopContTestNull() {
+        app.printWorldPopConts(null);
+    }
+
+    @Test
+    void printWorldPopContTestEmpty() {
+        ArrayList<Country> countries = new ArrayList<>();
+        app.printWorldPopConts(countries);
+    }
+
+    @Test
+    void printWorldPopContsTestContainsNull() {
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+        app.printWorldPopConts(countries);
+    }
+
+    @Test
+    void printWorldPopConts() {
+        ArrayList<Country> countries = new ArrayList<>();
+        Country country2 = new Country();
+        country2.code = "AGO";
+        country2.name = "Angola";
+        country2.continent = "Africa";
+        country2.region = "Central Africa";
+        country2.surfaceArea = 1246700.00;
+        country2.indepYear = 1975;
+        country2.population = 12878000;
+        country2.lifeExpectancy = 38.3;
+        country2.gnp = 6648.00;
+        country2.gnpOld = 7984.00;
+        country2.localName = "Angola";
+        country2.governmentForm = "Republic";
+        country2.headOfState = "José Eduardo dos Santos";
+        country2.capital = 56;
+        country2.code2 = "AO";
+        countries.add(country2);
+        app.printWorldPopConts(countries);
+    }
+
+    @Test
+    void printWorldPopRegTestNull() {
+        app.printWorldPopReg(null);
+    }
+
+    @Test
+    void printWorldPopRegTestEmpty() {
+        ArrayList<Country> countries = new ArrayList<>();
+        app.printWorldPopReg(countries);
+    }
+
+    @Test
+    void printWorldPopRegTestContainsNull() {
+        ArrayList<Country> countries = new ArrayList<>();
+        countries.add(null);
+        app.printWorldPopReg(countries);
+    }
+
+    @Test
+    void printWorldPopReg() {
+        ArrayList<Country> countries = new ArrayList<>();
+        Country country2 = new Country();
+        country2.code = "AGO";
+        country2.name = "Angola";
+        country2.continent = "Africa";
+        country2.region = "Central Africa";
+        country2.surfaceArea = 1246700.00;
+        country2.indepYear = 1975;
+        country2.population = 12878000;
+        country2.lifeExpectancy = 38.3;
+        country2.gnp = 6648.00;
+        country2.gnpOld = 7984.00;
+        country2.localName = "Angola";
+        country2.governmentForm = "Republic";
+        country2.headOfState = "José Eduardo dos Santos";
+        country2.capital = 56;
+        country2.code2 = "AO";
+        countries.add(country2);
+        app.printWorldPopReg(countries);
+    }
+
 }
+
 

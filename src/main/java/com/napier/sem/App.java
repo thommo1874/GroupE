@@ -39,6 +39,7 @@ public class App {
         // Display results
         a.displayCountryLanguage(countryLanguage2);
 
+
         /**
          * Country Related Reports Section
          */
@@ -47,7 +48,24 @@ public class App {
          //Extract country population information
          ArrayList<Country> countries = a.getPopulations();
 
-         //Get Country Information Reports Task IDs 1 - 6
+        /**
+         * World Population Reports Section Task IDs 23 - 31
+         */
+
+        //Print population of the world - Task ID 26
+        a.printWorldPop(countries);
+
+        //Print population of the world split by continent - Task ID 27
+        a.printWorldPopConts(countries);
+
+        //Print population of the world split by region - Task ID 28
+        a.printWorldPopReg(countries);
+
+
+
+
+
+        //Get Country Information Reports Task IDs 1 - 6
 
          //Print country population report Task ID 1
          a.printPopulations(countries);
@@ -132,6 +150,17 @@ public class App {
         a.printTopCapitalCityRegPopulations(cities);
 
 
+        /**
+         * World Population Reports Section
+         */
+
+        //Print population of the world
+        a.printWorldPop(countries);
+
+        //Print population of the world split by continent
+        a.printWorldPopConts(countries);
+
+
         // Disconnect from database
         a.disconnect();
     }
@@ -179,6 +208,8 @@ public class App {
         {
             try
             {
+
+                /**
                 // Create an SQL statement
                 Statement stmt = con.createStatement();
                 // Create string for SQL statement
@@ -188,7 +219,6 @@ public class App {
                             + "WHERE country.Capital = city.id AND country.Region = 'Middle East' "
                             + "ORDER BY country.Population DESC "
                             + "LIMIT 10 ";
-
 
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
@@ -206,6 +236,29 @@ public class App {
                     countries.add(country2);
                 }
                 return countries;
+                 */
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT  country.Region, SUM(country.Population) "
+                                + "FROM country "
+                                + "GROUP BY country.Region "
+                                + "ORDER BY country.Region ASC ";
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Extract country information
+                ArrayList<Country> countries = new ArrayList<Country>();
+                while (rset.next())
+                {
+                    Country country2 = new Country();
+                    country2.region = rset.getString("country.Region");
+                    country2.population = rset.getInt("sum(country.Population)");
+                    countries.add(country2);
+                }
+                return countries;
+
             }
             catch (Exception e)
             {
@@ -214,6 +267,84 @@ public class App {
                 return null;
             }
     }
+
+    /**
+     * Prints a list of countries.
+     * @param countries list of countries to print.
+     */
+    public void printWorldPop(ArrayList<Country> countries)
+    {
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-30s,\n", "Population ");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+            String country_string =
+                    String.format("%-30s ",
+                            country2.population);
+            System.out.println(country_string);
+        }
+    }
+    /**
+     * Prints a list of continents of the world and their populations.
+     * @param countries list of countries to print.
+     */
+    public void printWorldPopConts(ArrayList<Country> countries)
+    {
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("\"%-30s, %-20s\n", "Continent", "Continent Population");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+            String country_string =
+                    String.format("%-30s %-20s",
+                            country2.continent, country2.population);
+            System.out.println(country_string);
+        }
+    }
+    /**
+     * Prints a list of countries.
+     * @param countries list of countries to print.
+     */
+    public void printWorldPopReg(ArrayList<Country> countries)
+    {
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-30s %-30s,\n", "Region ", "Population ");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+            String country_string =
+                    String.format("%-30s %-30s",
+                            country2.region, country2.population);
+            System.out.println(country_string);
+        }
+    }
+
+
     /**
      * Prints a list of countries.
      * @param countries list of countries to print.
@@ -376,11 +507,12 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT city.Name, country.Name, city.Population "
+                    "SELECT country.Name, country.Population, sum(city.population)  "
                             + "FROM city, country "
-                            + "WHERE city.ID = country.Capital AND country.Region = 'Middle East' "
-                            + "ORDER BY city.Population DESC "
-                            + "LIMIT 20 ";
+                            + "WHERE country.Code = city.CountryCode "
+                            + "GROUP BY country.Name, country.Population "
+                            + "ORDER BY country.Population DESC ";
+                            //+ "LIMIT 20 ";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -389,10 +521,11 @@ public class App {
             while (rset.next())
             {
                 City city2 = new City();
-                city2.name = rset.getString("city.Name");
-                city2.country = rset.getString("country.Name");
+                city2.name = rset.getString("country.Name");
+                city2.population = rset.getInt("country.Population");
+                //city2.country = rset.getString("country.Name");
                 //city2.district = rset.getString("city.District");
-                city2.population = rset.getInt("city.Population");
+                city2.population = rset.getInt("sum(city.Population)");
                 cities.add(city2);
             }
             return cities;
