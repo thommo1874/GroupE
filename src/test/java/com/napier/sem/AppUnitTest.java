@@ -880,6 +880,66 @@ public class AppUnitTest {
         app.printWorldPopReg(countries);
     }
 
+    @Test
+    void printWorldPopDistTestNull() {
+        app.printWorldPopDist(null);
+    }
+
+    @Test
+    void printWorldPopDistTestEmpty() {
+        ArrayList<City> cities = new ArrayList<>();
+        app.printWorldPopDist(cities);
+    }
+
+    @Test
+    void printWorldPopDistTestContainsNull() {
+        ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printWorldPopDist(cities);
+    }
+
+    @Test
+    void printWorldPopDist() {
+        ArrayList<City> cities = new ArrayList<>();
+        City city2 = new City();
+        city2.iD = 1;
+        city2.name = "Kabul";
+        city2.countryCode = "AFG";
+        city2.district = "Kabol";
+        city2.population = 1780000;
+        cities.add(city2);
+        app.printWorldPopDist(cities);
+    }
+    @Test
+    void printWorldPopCityTestNull() {
+        app.printWorldPopCity(null);
+    }
+
+    @Test
+    void printWorldPopCityTestEmpty() {
+        ArrayList<City> cities = new ArrayList<>();
+        app.printWorldPopCity(cities);
+    }
+
+    @Test
+    void printWorldPopCityTestContainsNull() {
+        ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printWorldPopCity(cities);
+    }
+
+    @Test
+    void printWorldPopCity() {
+        ArrayList<City> cities = new ArrayList<>();
+        City city2 = new City();
+        city2.iD = 1;
+        city2.name = "Kabul";
+        city2.countryCode = "AFG";
+        city2.district = "Kabol";
+        city2.population = 1780000;
+        cities.add(city2);
+        app.printWorldPopCity(cities);
+    }
 }
 
 

@@ -44,12 +44,11 @@ public class App {
          * Country Related Reports Section
          */
 
-
          //Extract country population information
          ArrayList<Country> countries = a.getPopulations();
 
         /**
-         * World Population Reports Section Task IDs 23 - 31
+         * World Population Reports Section Task IDs 23 - 29
          */
 
         //Print population of the world - Task ID 26
@@ -61,7 +60,8 @@ public class App {
         //Print population of the world split by region - Task ID 28
         a.printWorldPopReg(countries);
 
-
+        //Print population of the world split by country - Task ID 29
+        a.printWorldPopCount(countries);
 
 
 
@@ -94,6 +94,12 @@ public class App {
 
         // Extract country population information
         ArrayList<City> cities = a.getCityPopulations();
+
+        //Print population of the world split by country - Task ID 30
+        a.printWorldPopDist(cities);
+
+        //Print population of the world split by country - Task ID 31
+        a.printWorldPopCity(cities);
 
         // Get City Information Reports Task IDs 7 - 16
 
@@ -160,6 +166,15 @@ public class App {
         //Print population of the world split by continent
         a.printWorldPopConts(countries);
 
+        /**
+         * Language Report Section
+         */
+
+        //Extract country population information
+        //ArrayList<CountryLanguage> languages = a.getLanguagePopulations();
+
+        //Print population of the world split by continent
+        //a.printWorldLanguagePops(languages);
 
         // Disconnect from database
         a.disconnect();
@@ -241,10 +256,12 @@ public class App {
                 Statement stmt = con.createStatement();
                 // Create string for SQL statement
                 String strSelect =
-                        "SELECT  country.Region, SUM(country.Population) "
+                        "SELECT  country.Name, country.Population "
                                 + "FROM country "
-                                + "GROUP BY country.Region "
-                                + "ORDER BY country.Region ASC ";
+                                //+ "WHERE country.Code = city.CountryCode "
+                                //+ "GROUP BY country.Name "
+                                + "ORDER BY country.Name ASC "
+                                + "LIMIT 10 "; //To limit returns when running queries
 
                 // Execute SQL statement
                 ResultSet rset = stmt.executeQuery(strSelect);
@@ -253,8 +270,8 @@ public class App {
                 while (rset.next())
                 {
                     Country country2 = new Country();
-                    country2.region = rset.getString("country.Region");
-                    country2.population = rset.getInt("sum(country.Population)");
+                    country2.districtName = rset.getString("country.Name");
+                    country2.population = rset.getInt("country.Population");
                     countries.add(country2);
                 }
                 return countries;
@@ -306,7 +323,7 @@ public class App {
             return;
         }
         // Print header
-        System.out.printf("\"%-30s, %-20s\n", "Continent", "Continent Population");
+        System.out.printf("\"%-30s %-20s\n", "Continent", "Continent Population");
         // Loop over all countries in the list
         for (Country country2 : countries)
         {
@@ -319,7 +336,7 @@ public class App {
         }
     }
     /**
-     * Prints a list of countries.
+     * Prints a list of regions of the world and their populations.
      * @param countries list of countries to print.
      */
     public void printWorldPopReg(ArrayList<Country> countries)
@@ -344,6 +361,31 @@ public class App {
         }
     }
 
+    /**
+     * Prints a list of countries of the world and their populations.
+     * @param countries list of countries to print.
+     */
+    public void printWorldPopCount(ArrayList<Country> countries)
+    {
+        // Check list is not null
+        if (countries == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
+        // Print header
+        System.out.printf("%-30s %-30s,\n", "Country ", "Population ");
+        // Loop over all countries in the list
+        for (Country country2 : countries)
+        {
+            if (country2 == null)
+                continue;
+            String country_string =
+                    String.format("%-30s %-30s",
+                            country2.name, country2.population);
+            System.out.println(country_string);
+        }
+    }
 
     /**
      * Prints a list of countries.
@@ -503,6 +545,8 @@ public class App {
     {
         try
         {
+                /**
+        {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -529,6 +573,31 @@ public class App {
                 cities.add(city2);
             }
             return cities;
+                 */
+
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT  city.Name, city.Population "
+                            + "FROM city "
+                            //+ "GROUP BY city.District "
+                            + "ORDER BY city.Name ASC "
+                            + "LIMIT 50 ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract city information
+            ArrayList<City> cities = new ArrayList<City>();
+            while (rset.next())
+            {
+                City city2 = new City();
+                city2.name = rset.getString("city.Name");
+                city2.population = rset.getInt("city.Population");
+                cities.add(city2);
+            }
+            return cities;
+
         }
         catch (Exception e)
         {
@@ -563,6 +632,59 @@ public class App {
             System.out.println(city_string);
         }
     }
+
+    /**
+     * Prints a list of districts of the world and their populations - Task ID 30.
+     * @param cities list of countries to print.
+     */
+    public void printWorldPopDist(ArrayList<City> cities)
+    {
+        // Check list is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-45s %-30s,\n", "District ", "Population ");
+        // Loop over all districts in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-45s %-30s",
+                            city2.district, city2.population);
+            System.out.println(city_string);
+        }
+    }
+
+    /**
+     * Prints a list of districts of the world and their populations - Task ID 30.
+     * @param cities list of countries to print.
+     */
+    public void printWorldPopCity(ArrayList<City> cities)
+    {
+        // Check list is not null
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.printf("%-45s %-30s,\n", "City ", "Population ");
+        // Loop over all districts in the list
+        for (City city2 : cities)
+        {
+            if (city2 == null)
+                continue;
+            String city_string =
+                    String.format("%-45s %-30s",
+                            city2.name, city2.population);
+            System.out.println(city_string);
+        }
+    }
+
     /**public void addCity(city city2)
      {
      try
@@ -580,178 +702,6 @@ public class App {
      }
      }
      */
-
-    /**
-     * Prints a list of cities.
-     * @param //cities list of countries to print.
-     */
-    public City getCity(int ID)
-    {
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT ID, Name, CountryCode, District, Population "
-                            + "FROM city "
-                            + "WHERE ID = " + ID;
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new city if valid.
-            // Check one is returned
-            if (rset.next())
-            {
-                City city2 = new City();
-                city2.iD = rset.getInt("ID");
-                city2.name = rset.getString("Name");
-                city2.countryCode = rset.getString("CountryCode");
-                city2.district = rset.getString("District");
-                city2.population = rset.getInt("Population");
-                return city2;
-            }
-            else
-                return null;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get city details");
-            return null;
-        }
-    }
-
-    public void displayCity(City city2)
-    {
-        if (city2 != null)
-        {
-            System.out.println(
-                    city2.iD + " "
-                            + city2.name + " "
-                            + city2.countryCode + "\n"
-                            + city2.district + "\n"
-                            + city2.population + "\n");
-        }
-    }
-    /**
-     * Prints a list of countries.
-     * @param //cities list of countries to print.
-     * @return
-     */
-    public Country getCountry(String Code) {
-        try {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Continent, Region, SurfaceArea, IndepYear, Population, LifeExpectancy, GNP, GNPOld, LocalName, GovernmentForm, HeadOfState, Capital, Code2 "
-                            + "FROM country "
-                            + "WHERE Code = " + "Code";
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new city if valid.
-            // Check one is returned
-            if (rset.next()) {
-                Country country2 = new Country();
-                country2.code = rset.getString("country.Code");
-                country2.name = rset.getString("country.Name");
-                country2.continent = rset.getString("country.Continent");
-                country2.region = rset.getString("country.Region");
-                country2.surfaceArea = rset.getInt("country.SurfaceArea");
-                country2.indepYear = rset.getInt("country.IndepYear");
-                country2.population = rset.getInt("country.Population");
-                country2.lifeExpectancy = rset.getInt("country.LifeExpectancy");
-                country2.gnp = rset.getInt("country.GNP");
-                country2.gnpOld = rset.getInt("country.GNPOld");
-                country2.localName = rset.getString("country.LocalName");
-                country2.governmentForm = rset.getString("country.GovernmentForm");
-                country2.headOfState = rset.getString("country.HeadOfState");
-                country2.capital = rset.getInt("country.Capital");
-                country2.code2 = rset.getString("country.Code2");
-                return country2;
-            } else
-                return null;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country details");
-            return null;
-        }
-    }
-
-    public void displayCountry(Country country2)
-    {
-        if (country2 != null)
-        {
-            System.out.println(
-                country2.code + " "
-                + country2.name + " "
-                + country2.continent + "\n"
-                + country2.region + "\n"
-                + country2.surfaceArea + "\n"
-                + country2.indepYear + "\n"
-                + country2.population + "\n"
-                + country2.lifeExpectancy + "\n"
-                + country2.gnp + "\n"
-                + country2.gnpOld + "\n"
-                + country2.localName + "\n"
-                + country2.governmentForm + "\n"
-                + country2.headOfState + "\n"
-                + country2.capital + "\n"
-                + country2.code2 + "\n");
-        }
- }
- /**
- * Prints a list of countries.
- * @param //cities list of countries to print.
- * @return
- */
-    public CountryLanguage getLanguage(String Code)
-     {
-     try
-     {
-     // Create an SQL statement
-     Statement stmt = con.createStatement();
-     // Create string for SQL statement
-     String strSelect =
-     "SELECT CountryCode, Language, IsOfficial, Percentage "
-     + "FROM countrylanguage "
-     + "WHERE CountryCode = " + "CountryCode";
-     // Execute SQL statement
-     ResultSet rset = stmt.executeQuery(strSelect);
-     // Return new city if valid.
-     // Check one is returned
-     if (rset.next())
-     {
-     CountryLanguage countryLanguage2 = new CountryLanguage();
-     countryLanguage2.countryCode = rset.getString("CountryCode");
-     countryLanguage2.language = rset.getString("Language");
-     countryLanguage2.isOfficial = rset.getString("IsOfficial");
-     countryLanguage2.percentage = rset.getInt("Percentage");
-     return countryLanguage2;
-     }
-     else
-     return null;
-     }
-     catch (Exception e)
-     {
-     System.out.println(e.getMessage());
-     System.out.println("Failed to get language details");
-     return null;
-     }
-     }
-      public void displayCountryLanguage(CountryLanguage countryLanguage2)
-     {
-     if (countryLanguage2 != null)
-     {
-     System.out.println(
-     countryLanguage2.countryCode + " "
-     + countryLanguage2.language + " "
-     + countryLanguage2.isOfficial + "\n"
-     + countryLanguage2.percentage + "\n");
-     }
-     }
-
-
 
     /**
      * Prints a list of cities.
@@ -1135,6 +1085,223 @@ public class App {
             System.out.println(city_string);
         }
     }
+
+    /** Language Reports
+     * Gets all countries and populations.
+     * @return A list of all countries and populations, or null if there is an error.
+
+    public ArrayList<CountryLanguage> getLanguagePopulations()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT  countryLanguage.Name, country.Population "
+                            + "FROM country "
+                            //+ "WHERE country.Code = city.CountryCode "
+                            //+ "GROUP BY country.Name "
+                            + "ORDER BY country.Name ASC "
+                            + "LIMIT 10 "; //To limit returns when running queries
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information
+            ArrayList<CountryLanguage> languages = new ArrayList<CountryLanguage>();
+            while (rset.next())
+            {
+                CountryLanguage countryLanguage2 = new CountryLanguage();
+                countryLanguage2.districtName = rset.getString("country.Name");
+                countryLanguage2.population = rset.getInt("country.Population");
+                languages.add(countryLanguage2);
+            }
+            return languages;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get language details");
+            return null;
+        }
+    }
+
+    /**
+     * Prints a list of cities.
+     * @param //cities list of countries to print.
+     */
+    public City getCity(int ID)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT ID, Name, CountryCode, District, Population "
+                            + "FROM city "
+                            + "WHERE ID = " + ID;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                City city2 = new City();
+                city2.iD = rset.getInt("ID");
+                city2.name = rset.getString("Name");
+                city2.countryCode = rset.getString("CountryCode");
+                city2.district = rset.getString("District");
+                city2.population = rset.getInt("Population");
+                return city2;
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public void displayCity(City city2)
+    {
+        if (city2 != null)
+        {
+            System.out.println(
+                    city2.iD + " "
+                            + city2.name + " "
+                            + city2.countryCode + "\n"
+                            + city2.district + "\n"
+                            + city2.population + "\n");
+        }
+    }
+    /**
+     * Prints a list of countries.
+     * @param //cities list of countries to print.
+     * @return
+     */
+    public Country getCountry(String Code) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Continent, Region, SurfaceArea, IndepYear, Population, LifeExpectancy, GNP, GNPOld, LocalName, GovernmentForm, HeadOfState, Capital, Code2 "
+                            + "FROM country "
+                            + "WHERE Code = " + "Code";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            // Check one is returned
+            if (rset.next()) {
+                Country country2 = new Country();
+                country2.code = rset.getString("country.Code");
+                country2.name = rset.getString("country.Name");
+                country2.continent = rset.getString("country.Continent");
+                country2.region = rset.getString("country.Region");
+                country2.surfaceArea = rset.getInt("country.SurfaceArea");
+                country2.indepYear = rset.getInt("country.IndepYear");
+                country2.population = rset.getInt("country.Population");
+                country2.lifeExpectancy = rset.getInt("country.LifeExpectancy");
+                country2.gnp = rset.getInt("country.GNP");
+                country2.gnpOld = rset.getInt("country.GNPOld");
+                country2.localName = rset.getString("country.LocalName");
+                country2.governmentForm = rset.getString("country.GovernmentForm");
+                country2.headOfState = rset.getString("country.HeadOfState");
+                country2.capital = rset.getInt("country.Capital");
+                country2.code2 = rset.getString("country.Code2");
+                return country2;
+            } else
+                return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    public void displayCountry(Country country2)
+    {
+        if (country2 != null)
+        {
+            System.out.println(
+                    country2.code + " "
+                            + country2.name + " "
+                            + country2.continent + "\n"
+                            + country2.region + "\n"
+                            + country2.surfaceArea + "\n"
+                            + country2.indepYear + "\n"
+                            + country2.population + "\n"
+                            + country2.lifeExpectancy + "\n"
+                            + country2.gnp + "\n"
+                            + country2.gnpOld + "\n"
+                            + country2.localName + "\n"
+                            + country2.governmentForm + "\n"
+                            + country2.headOfState + "\n"
+                            + country2.capital + "\n"
+                            + country2.code2 + "\n");
+        }
+    }
+    /**
+     * Prints a list of countries.
+     * @param //cities list of countries to print.
+     * @return
+     */
+    public CountryLanguage getLanguage(String Code)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT CountryCode, Language, IsOfficial, Percentage "
+                            + "FROM countrylanguage "
+                            + "WHERE CountryCode = " + "CountryCode";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                CountryLanguage countryLanguage2 = new CountryLanguage();
+                countryLanguage2.countryCode = rset.getString("CountryCode");
+                countryLanguage2.language = rset.getString("Language");
+                countryLanguage2.isOfficial = rset.getString("IsOfficial");
+                countryLanguage2.percentage = rset.getInt("Percentage");
+                return countryLanguage2;
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get language details");
+            return null;
+        }
+    }
+    public void displayCountryLanguage(CountryLanguage countryLanguage2)
+    {
+        if (countryLanguage2 != null)
+        {
+            System.out.println(
+                    countryLanguage2.countryCode + " "
+                            + countryLanguage2.language + " "
+                            + countryLanguage2.isOfficial + "\n"
+                            + countryLanguage2.percentage + "\n");
+        }
+    }
+
+
+
+
+
+
     /**
      * Disconnect from the MySQL database.
      */

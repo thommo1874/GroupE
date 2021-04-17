@@ -68,4 +68,10 @@ public class Country {
      * Capital Name
      */
     public String capitalName;
+
+    /**
+     * District Name
+     */
+    public String districtName;
 }
+
