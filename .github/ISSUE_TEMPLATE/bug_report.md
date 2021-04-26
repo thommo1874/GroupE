@@ -1,17 +1,17 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: BUG - Reports are empty
+about: Create a report to help us improve our data provision
+title: BUG - Reports have no data
 labels: ''
 assignees: ''
 
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+Please give us a clear and detailed description of the problem you are facing...no detail is too small! 
 
 **To Reproduce**
-Steps to reproduce the behavior:
+Tell us what you were doing when you discovered the problem:
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -21,7 +21,7 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem.
+Screenshots are really helpful - if you have one please attach it.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]
