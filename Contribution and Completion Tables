@@ -1,11 +1,15 @@
 Contribution Table
 
-Matriculation Number | Code Review 1 | Code Review 2 | Code Review 3 | Code Review 4 | Final Deliverable
------------- | ------------- | ------------- | ------------- | ------------- | -------------
-Content from cell 1 | Content from cell 2 | Content from cell 3 | Content from cell 4 | Content from cell 5 | Content from cell 6
-Content in the 1st column | Content in the 2nd column | Content in the 3rd column | Content in the 4th column | Content in the 5th column | Content in the 6th column
+| Matriculation Number | Code Review 1 | Code Review 2 | Code Review 3 | Code Review 4 | Final Deliverable |
+| ------------ | ------------- | ------------- | ------------- | ------------- | ------------- |
+|Content from cell 1 | Content from cell 2 | Content from cell 3 | Content from cell 4 | Content from cell 5 | Content from cell 6 |
+| Content in the 1st column | Content in the 2nd column | Content in the 3rd column | Content in the 4th column | Content in the 5th column | Content in the 6th column |
+|Content from cell 1 | Content from cell 2 | Content from cell 3 | Content from cell 4 | Content from cell 5 | Content from cell 6 |
+|Content from cell 1 | Content from cell 2 | Content from cell 3 | Content from cell 4 | Content from cell 5 | Content from cell 6 |
 
-
+| Attempt | #1  | #2  |
+| :---:   | :-: | :-: |
+| Seconds | 301 | 283 |
 
 
 Matriculation Number	Code Review 1	Code Review 2	Code Review 3	Code Review 4	Final Deliverable
