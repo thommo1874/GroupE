@@ -18,3 +18,9 @@ Matriculation Number	Code Review 1	Code Review 2	Code Review 3	Code Review 4	Fin
 4000xxxx	25	0	0.5	0.25	0.2
 4000xxxx	25	0	0.0	0.25	0.2
 Total	100	100	100	100	100
+
+
+First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
